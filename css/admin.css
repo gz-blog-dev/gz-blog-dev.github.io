@@ -1,0 +1,536 @@
+/* ============================================
+   瓜子 Blog — 管理后台样式
+   ============================================ */
+
+/* --- 登录页面 --- */
+.admin-login-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.admin-login-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 4px 24px var(--color-shadow-hover);
+  border: 1px solid var(--color-border-light);
+}
+
+.admin-login-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.admin-login-card h2 {
+  margin-bottom: 8px;
+}
+
+.admin-login-hint {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.admin-login-hint code {
+  background: var(--color-code-bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: var(--color-primary-dark);
+}
+
+.admin-login-input input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  transition: border-color var(--transition-fast);
+  outline: none;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.admin-login-input input:focus {
+  border-color: var(--color-primary);
+}
+
+.admin-login-error {
+  color: var(--color-error);
+  font-size: 0.88rem;
+  min-height: 22px;
+  margin-top: 8px;
+}
+
+.admin-login-back {
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+
+/* --- 后台顶部栏 --- */
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-back-link {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.admin-back-link:hover {
+  background: var(--color-primary-pale);
+  color: var(--color-primary);
+}
+
+.admin-topbar-left h1 {
+  font-size: 1.15rem;
+}
+
+/* --- 后台布局 --- */
+.admin-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: calc(100vh - 56px);
+}
+
+.admin-sidebar {
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border-light);
+  padding: 16px 12px;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.93rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  background: none;
+  text-decoration: none;
+}
+
+.admin-nav-item:hover {
+  background: var(--color-primary-pale);
+  color: var(--color-text);
+}
+
+.admin-nav-item.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+/* --- 主内容区 --- */
+.admin-main {
+  padding: 24px;
+  background: var(--color-bg);
+  overflow-y: auto;
+}
+
+.admin-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-section-header h2 {
+  font-size: 1.25rem;
+}
+
+.admin-count {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* --- 表格 --- */
+.admin-table-wrapper {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--color-primary-pale);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  font-size: 0.93rem;
+  border-bottom: 1px solid var(--color-border-light);
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover td {
+  background: var(--color-primary-pale);
+}
+
+.admin-table .article-title-cell {
+  font-weight: 600;
+  color: var(--color-text);
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-table .article-tags-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.admin-table .article-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.admin-empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 32px !important;
+}
+
+/* --- 按钮 --- */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  font-family: inherit;
+}
+
+.admin-btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.admin-btn-primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(232, 145, 58, 0.3);
+}
+
+.admin-btn-outline {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.admin-btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-pale);
+}
+
+.admin-btn-danger {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.admin-btn-danger:hover {
+  opacity: 0.9;
+}
+
+.admin-btn-sm {
+  padding: 5px 12px;
+  font-size: 0.82rem;
+}
+
+/* --- 编辑器 --- */
+.editor-form {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+  padding: 28px;
+}
+
+.editor-field {
+  margin-bottom: 20px;
+}
+
+.editor-field label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.editor-field label .required {
+  color: var(--color-error);
+}
+
+.editor-field input[type="text"],
+.editor-field input[type="date"],
+.editor-field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  transition: border-color var(--transition-fast);
+  outline: none;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.editor-field input:focus,
+.editor-field textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.editor-field textarea {
+  resize: vertical;
+}
+
+.editor-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.editor-field-half {
+  margin-bottom: 20px;
+}
+
+/* --- 写作工作区 --- */
+.editor-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 460px;
+}
+
+.editor-pane:first-child {
+  border-right: 1px solid var(--color-border);
+}
+
+.editor-pane-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--color-code-bg);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+}
+
+.editor-pane-label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.editor-char-count {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.editor-auto-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.editor-pane textarea#article-content {
+  flex: 1;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  resize: none;
+  outline: none;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.editor-pane textarea#article-content:focus {
+  box-shadow: none;
+}
+
+.editor-preview {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: var(--color-surface);
+}
+
+.editor-preview .article-content {
+  font-size: 0.95rem;
+}
+
+.editor-preview .article-content h1 { font-size: 1.6rem; }
+.editor-preview .article-content h2 { font-size: 1.3rem; }
+.editor-preview .article-content h3 { font-size: 1.1rem; }
+
+/* --- 编辑器操作栏 --- */
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* --- 模态弹窗 --- */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.admin-modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 32px var(--color-shadow-hover);
+}
+
+.admin-modal h3 {
+  margin-bottom: 12px;
+}
+
+.admin-modal p {
+  margin-bottom: 8px;
+  color: var(--color-text-secondary);
+}
+
+.admin-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* --- 响应式 --- */
+@media (max-width: 768px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-light);
+    padding: 8px 12px;
+  }
+
+  .admin-nav {
+    flex-direction: row;
+  }
+
+  .admin-main {
+    padding: 16px;
+  }
+
+  .editor-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-pane:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    min-height: 300px;
+  }
+
+  .editor-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table th:nth-child(2),
+  .admin-table td:nth-child(2) {
+    display: none;
+  }
+
+  .admin-topbar {
+    padding: 0 16px;
+  }
+}

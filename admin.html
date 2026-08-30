@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 — 瓜子 Blog</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <!-- Marked + Highlight -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@11/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/atom-one-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+</head>
+<body>
+  <!-- Token 登录界面 -->
+  <div class="admin-login-overlay" id="login-overlay">
+    <div class="admin-login-card">
+      <div class="admin-login-icon">🔐</div>
+      <h2>管理后台登录</h2>
+      <p class="admin-login-hint">
+        请在终端运行 <code>node server.js</code>，启动信息中包含 Admin Token。
+      </p>
+      <div class="admin-login-input">
+        <input type="password" id="token-input" placeholder="请输入 Admin Token" autocomplete="off">
+      </div>
+      <div class="admin-login-error" id="login-error"></div>
+      <button class="admin-btn admin-btn-primary" id="login-btn">验证并进入</button>
+      <p class="admin-login-back"><a href="index.html">← 返回前台</a></p>
+    </div>
+  </div>
+
+  <!-- 后台主界面 -->
+  <div class="admin-app" id="admin-app" style="display:none;">
+    <!-- 顶部栏 -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <a href="index.html" class="admin-back-link">← 前台</a>
+        <h1>⚙️ 管理后台</h1>
+      </div>
+      <div class="admin-topbar-right">
+        <button class="admin-btn admin-btn-outline" id="btn-logout">退出</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <!-- 侧边栏 -->
+      <aside class="admin-sidebar">
+        <nav class="admin-nav">
+          <a class="admin-nav-item active" data-view="list">📋 文章列表</a>
+          <a class="admin-nav-item" data-view="editor">✏️ 新建文章</a>
+        </nav>
+      </aside>
+
+      <!-- 主内容区 -->
+      <main class="admin-main">
+        <!-- 文章列表视图 -->
+        <section class="admin-view" id="view-list">
+          <div class="admin-section-header">
+            <h2>文章管理</h2>
+            <span class="admin-count" id="admin-article-count">共 0 篇</span>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table" id="admin-article-table">
+              <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>日期</th>
+                  <th>标签</th>
+                  <th style="width: 120px;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="admin-article-list-body">
+                <tr><td colspan="4" class="admin-empty">加载中...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 文章编辑器视图 -->
+        <section class="admin-view" id="view-editor" style="display:none;">
+          <div class="admin-section-header">
+            <h2 id="editor-title-label">新建文章</h2>
+            <button class="admin-btn admin-btn-outline" id="btn-cancel-edit">← 返回列表</button>
+          </div>
+
+          <form class="editor-form" id="editor-form">
+            <!-- 标题 -->
+            <div class="editor-field">
+              <label for="article-title">文章标题 <span class="required">*</span></label>
+              <input type="text" id="article-title" placeholder="输入文章标题..." required maxlength="120">
+            </div>
+
+            <!-- 日期 & 标签 -->
+            <div class="editor-row">
+              <div class="editor-field editor-field-half">
+                <label for="article-date">发布日期</label>
+                <input type="date" id="article-date">
+              </div>
+              <div class="editor-field editor-field-half">
+                <label for="article-tags">标签（逗号分隔）</label>
+                <input type="text" id="article-tags" placeholder="前端开发, JavaScript, CSS">
+              </div>
+            </div>
+
+            <!-- 摘要 -->
+            <div class="editor-field">
+              <label for="article-summary">摘要</label>
+              <textarea id="article-summary" rows="2" placeholder="简短描述文章内容（留空则自动从正文截取）" maxlength="200"></textarea>
+            </div>
+
+            <!-- 编辑器区域 -->
+            <div class="editor-workspace">
+              <div class="editor-pane">
+                <div class="editor-pane-header">
+                  <span class="editor-pane-label">📝 Markdown 编辑</span>
+                  <span class="editor-char-count" id="char-count">0 字</span>
+                </div>
+                <textarea id="article-content" placeholder="开始写作...
+支持 Markdown 语法：
+# 一级标题
+## 二级标题
+**粗体** *斜体* `代码`
+```语言
+代码块
+```
+- 列表项
+> 引用
+[链接](url)
+![图片](url)"></textarea>
+              </div>
+              <div class="editor-pane">
+                <div class="editor-pane-header">
+                  <span class="editor-pane-label">👁️ 实时预览</span>
+                  <label class="editor-auto-preview">
+                    <input type="checkbox" id="auto-preview" checked> 自动刷新
+                  </label>
+                </div>
+                <div class="editor-preview article-content" id="editor-preview">
+                  <p style="color: var(--color-text-muted); text-align: center; margin-top: 60px;">
+                    在左侧输入 Markdown 内容即可预览
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="editor-actions">
+              <button type="button" class="admin-btn admin-btn-outline" id="btn-cancel-edit-bottom">取消</button>
+              <button type="button" class="admin-btn admin-btn-outline" id="btn-preview-toggle">👁️ 切换预览模式</button>
+              <button type="submit" class="admin-btn admin-btn-primary" id="btn-save">
+                <span id="btn-save-text">发布文章</span>
+              </button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- 删除确认弹窗 -->
+  <div class="admin-modal-overlay" id="delete-modal" style="display:none;">
+    <div class="admin-modal">
+      <h3>⚠️ 确认删除</h3>
+      <p>确定要删除文章「<strong id="delete-article-title"></strong>」吗？</p>
+      <p style="color: var(--color-text-muted); font-size: 0.9rem;">此操作不可撤销。</p>
+      <div class="admin-modal-actions">
+        <button class="admin-btn admin-btn-outline" id="btn-delete-cancel">取消</button>
+        <button class="admin-btn admin-btn-danger" id="btn-delete-confirm">确认删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/articles-data.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

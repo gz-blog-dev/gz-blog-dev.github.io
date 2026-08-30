@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="瓜子 Blog — 一个关于前端开发、工具推荐和技术分享的个人博客">
+  <title>瓜子 Blog</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+</head>
+<body>
+  <div class="reading-progress"></div>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <span class="logo-icon">🌻</span>
+        瓜子 Blog
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="articles.html">文章</a></li>
+        <li><a href="tags.html">标签</a></li>
+        <li><a href="about.html">关于</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="菜单" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="page-header">
+      <h1>🌻 瓜子 Blog</h1>
+      <p>记录思考，分享成长 —— 前端开发 · 工具推荐 · 技术分享</p>
+    </section>
+
+    <div class="container">
+      <!-- 最新文章 -->
+      <h2 style="margin-bottom: 20px; font-size: 1.3rem;">📝 最新文章</h2>
+      <div class="article-list" id="latest-articles">
+        <!-- JS 动态渲染 -->
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="articles.html" class="tag tag-lg" style="font-size: 1rem; padding: 10px 28px;">
+          查看全部文章 →
+        </a>
+      </div>
+
+      <!-- 标签云预览 -->
+      <h2 style="margin: 48px 0 16px; font-size: 1.3rem;">🏷️ 热门标签</h2>
+      <div class="tag-cloud" id="home-tag-cloud">
+        <!-- JS 动态渲染 -->
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-brand">🌻 瓜子 Blog</div>
+      <p>记录思考，分享成长 &copy; 2026</p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="回到顶部" title="回到顶部">↑</button>
+
+  <!-- Scripts -->
+  <script src="js/articles-data.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 从 API 获取文章列表
+      const { articles } = await BlogAPI.getArticles();
+      const latestArticles = articles.slice(0, 4);
+      BlogRenderer.renderArticleCards(latestArticles, 'latest-articles');
+
+      // 从 API 获取标签统计
+      const { tags } = await BlogAPI.getTags();
+      const tagStats = {};
+      tags.forEach(t => { tagStats[t.name] = t.count; });
+      BlogRenderer.renderTagCloud(tagStats, 'home-tag-cloud');
+    });
+  </script>
+</body>
+</html>
