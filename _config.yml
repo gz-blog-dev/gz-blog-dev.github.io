@@ -1,0 +1,5 @@
+# 改成你的github.io地址
+url: "https://gz-blog-dev.github.io"
+
+plugins:
+  - jekyll-sitemap
